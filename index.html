@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Guice by mycila</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Guice</h1>
+          <h2>Mycila Guice Extensions</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/mycila/guice/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/mycila/guice/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/mycila/guice" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="summary-mycila-guice" class="anchor" href="#summary-mycila-guice"><span class="octicon octicon-link"></span></a>summary Mycila Guice</h1>
+
+<p></p>
+
+<p>= Introduction =</p>
+
+<p>MycilaGuice is an extension library to [<a href="http://code.google.com/p/google-guice/">http://code.google.com/p/google-guice/</a> Google Guice 3] which adds many features such as:</p>
+
+<p>contributions:</p>
+
+<ul>
+<li>JSR250 (<code>@Resource</code>, <code>@PreDestroy</code>, <code>@PostConstruct</code>)</li>
+<li>Additional scopes</li>
+<li>Testing integration</li>
+<li>Service loader facilities</li>
+<li>Binding helpers</li>
+<li>Support of legacy classes (classes you cannot modify to add <a href="https://github.com/Inject" class="user-mention">@Inject</a>)</li>
+</ul><p>The project can be used with Guice 2 or 3 and supports JSR330 (javax.inject)</p>
+
+<p>= Download =</p>
+
+<p>Mycila Guice is deployed in maven 2 Central Repository:</p>
+
+<p><a href="http://repo2.maven.org/maven2/com/mycila/mycila-guice/">http://repo2.maven.org/maven2/com/mycila/mycila-guice/</a></p>
+
+<p>{{{
+com.mycilamycila-guiceX.Y
+}}}</p>
+
+<ul>
+<li>[<a href="http://code.google.com/p/mycila/source/browse/#svn/mycila-guice/trunk">http://code.google.com/p/mycila/source/browse/#svn/mycila-guice/trunk</a> Browse source code]</li>
+<li>[<a href="http://mycila.googlecode.com/svn/mycila-guice/trunk/">http://mycila.googlecode.com/svn/mycila-guice/trunk/</a> Checkout URL]</li>
+</ul><p>Snapshots and releases are also availables at</p>
+
+<ul>
+<li><a href="https://mc-repo.googlecode.com/svn/maven2/snapshots/com/mycila/mycila-guice/">https://mc-repo.googlecode.com/svn/maven2/snapshots/com/mycila/mycila-guice/</a></li>
+<li><a href="https://mc-repo.googlecode.com/svn/maven2/releases/com/mycila/mycila-guice/">https://mc-repo.googlecode.com/svn/maven2/releases/com/mycila/mycila-guice/</a></li>
+</ul><p>= Mycila Guice Features =</p>
+
+<p>== JSR250 ==</p>
+
+<p>=== Creating your injector ===</p>
+
+<p>Using the plain old Guice way, by using the <code>Jsr250Module</code>.</p>
+
+<p>{{{
+Injector injector = Guice.createInjector(Stage.PRODUCTION, new MyModule(), new Jsr250Module());
+}}}</p>
+
+<p>Or by using the <code>Jsr250</code> helper class, which will return you a <code>Jsr250Injector</code>, which is a subclass of Guice's Injector.</p>
+
+<p>{{{
+Jsr250Injector jsr250Injector = Jsr250.createInjector(Stage.PRODUCTION, new MyModule());
+}}}</p>
+
+<p>We hardly recommend to use the later form because you can manage the lifecycle of the JSR250 injector and objects more easily with the destroy() method:</p>
+
+<p>{{{
+public interface Jsr250Injector extends Injector {
+    void destroy();
+}
+}}}</p>
+
+<p>=== Injecting using <code>@Resource</code> ===</p>
+
+<p>You can inject fields and methods as usual, and also benefits of Guice's binding annotations and providers.</p>
+
+<p>Fields are always injected before methods.</p>
+
+<p>{{{
+public class Account {</p>
+
+<pre><code>@Resource
+Bank bank;
+
+String number;
+
+@Resource
+void init(Client client, @Named("RNG") Provider&lt;Id&gt; rng) {
+    number = bank.id() + "" + client.id() + "" + rng.get().id();
+}
+
+public String getNumber() {
+    return number;
+}
+</code></pre>
+
+<p>}
+}}}</p>
+
+<p>=== Controlling lifecycle with <code>@PostConstruct</code> and <code>@PreDestroy</code> ===</p>
+
+<p>You can annotate no argument methods with these annotation.</p>
+
+<ul>
+<li>Methods annotated by <code>@PostConstruct</code> will be executed after injection is completed.</li>
+<li>Methods annotated by <code>@PreDestroy</code> will be executed when closing the injector</li>
+</ul><p>{{{
+<a href="https://github.com/Singleton" class="user-mention">@Singleton</a>
+public class Bank {</p>
+
+<pre><code>List&lt;Account&gt; accounts = new ArrayList&lt;Account&gt;();
+
+@Resource
+Provider&lt;Account&gt; provider;
+
+@PostConstruct
+void openBank() {
+    // create two account initially
+    accounts.add(provider.get());
+    accounts.add(provider.get());
+}
+
+@PreDestroy
+void closeBank() {
+    accounts.clear();
+}
+
+int id() { return 2; }
+List&lt;Account&gt; accounts() { return accounts; }
+</code></pre>
+
+<p>}
+}}}</p>
+
+<p>Post construction methods are handled automatically. But <code>@PreDestroy</code> methods can only be called on singleton instances or scoped instances, when closing the <code>Jsr250Injector</code>.</p>
+
+<p>If you don't use the <code>Jsr250Injector</code>, you need to retreive the <code>Jsr250Destroyer</code> to destroy singletons before closing the application.</p>
+
+<p>Here is the two ways. When using the <code>Jsr250Injector</code>:</p>
+
+<p>{{{
+jsr250Injector.destroy();
+}}}</p>
+
+<p>Or when using Guice's default injector:</p>
+
+<p>{{{
+injector.getInstance(Jsr250Destroyer.class).preDestroy();
+}}}</p>
+
+<p>== Binding helpers ==</p>
+
+<p>=== Overview ===</p>
+
+<p><code>BinderHelper</code> is a class which help you deal more easily with Mycila Guice features. To use is, you can do a static import of this class:</p>
+
+<p>{{{
+import static com.mycila.inject.BinderHelper.in;
+}}}</p>
+
+<p>Then in your module you can use:</p>
+
+<p>{{{
+// Bind an instance to a class and also request injection on that instance
+in(binder()).bind(MyClass, myInstance);</p>
+
+<p>// Bind several interceptors at once, and also request injection on them
+in(binder()).bindInterceptor(classMatcher, methodMatcher, interceptor1, interceptor2)</p>
+
+<p>// Add support for an external annotation to be used for post injection handlers
+in(binder()).bindAfterInjection(PostConstruct.class, Jsr250MethodHandler.class);</p>
+
+<p>// Add support for an external annotation to be used to inject members besides the usual <a href="https://github.com/Inject" class="user-mention">@Inject</a>
+in(binder()).bindAnnotationInjector(Resource.class, ResourceKeyProvider.class)</p>
+
+<p>// Manually bind some additional scopes
+bindScope(RenewableSingleton.class, in(binder()).renewableSingleton(1, TimeUnit.DAYS));
+bindScope(ExpiringSingleton.class, in(binder()).expiringSingleton(1, TimeUnit.DAYS));
+bindScope(ConcurrentSingleton.class, in(binder()).concurrentSingleton(20, TimeUnit.SECONDS));
+bindScope(ResetSingleton.class, in(binder()).resetSingleton());
+bindScope(WeakSingleton.class, in(binder()).weakSingleton());
+bindScope(SoftSingleton.class, in(binder()).softSingleton());
+}}}</p>
+
+<p>Most of the calls are chainable (fluent api). In example:</p>
+
+<p>{{{
+in(binder)
+    .bindAnnotationInjector(Resource.class, Jsr250KeyProvider.class)
+    .bindAfterInjection(PostConstruct.class, Jsr250PostConstructHandler.class)
+    .bind(Jsr250Destroyer.class, new Jsr250Destroyer());
+}}}</p>
+
+<p>=== Customizing injection annotation ===</p>
+
+<p>In example, suppose you have your own annotation called <code>@Autowire</code> to inject dependencies. You could automatically support <code>@Resource</code>, <code>@Inject</code> and <code>@Autowire</code> at the same time. Supposing you'd like to use this annotation:</p>
+
+<p>{{{
+<a href="https://github.com/Target" class="user-mention">@Target</a>({METHOD, CONSTRUCTOR, FIELD})
+@Retention(RUNTIME)
+public <a href="https://github.com/interface" class="user-mention">@interface</a> Autowire {
+    String value() default "";
+}
+}}}</p>
+
+<p>You have to define a <code>KeyProvider</code> which help creating the Guice key used to recover a dependency from the annotation information plus the injected member.</p>
+
+<p>{{{
+static final class AutowireKeyProvider extends KeyProviderSkeleton {
+    @Override
+    public Key&lt;?&gt; getKey(TypeLiteral&lt;?&gt; injectedType, Field injectedMember, Autowire resourceAnnotation) {
+        String name = resourceAnnotation.value();
+        return name.length() == 0 ?
+                super.getKey(injectedType, injectedMember, resourceAnnotation) :
+                Key.get(injectedType.getFieldType(injectedMember), Names.named(name));
+    }
+}
+}}}</p>
+
+<p>{{{
+Jsr250Injector jsr250Injector = Jsr250.createInjector(new MyModule(), new AbstractModule() {
+    @Override
+    protected void configure() {
+        in(binder()).bindAnnotationInjector(Autowire.class, AutowireKeyProvider.class);
+    }
+});
+}}}</p>
+
+<p>== Additional scopes ==</p>
+
+<p>You can install additional scopes in one way by running one of these two lines:</p>
+
+<p>{{{
+Jsr250Injector jsr250Injector = Jsr250.createInjector(new ExtraScopeModule(), new MyModule());</p>
+
+<p>Injector injector = Guice.createInjector(new ExtraScopeModule(), new MyModule());
+}}}</p>
+
+<p>This module installs these additional scopes:</p>
+
+<ul>
+<li>
+<code>@ConcurrentSingleton</code> (with a thread timeout of 20 seconds)</li>
+<li><code>@WeakSingleton</code></li>
+<li><code>@SoftSingleton</code></li>
+<li><code>@ResetSingleton</code></li>
+</ul><p>Two other scopes are available to be bound manually:</p>
+
+<ul>
+<li><code>@ExpiringSingleton</code></li>
+<li><code>@RenewableSingleton</code></li>
+</ul><p>== Legacy support ==</p>
+
+<p>== Service Loader ==</p>
+
+<p>{{{
+binder.bind(AgentPlugin[].class)
+    .toProvider(ServiceLoaderProvider.of(AgentPlugin.class).withClassLoader(ClassLoader.class))
+    .in(Cached20Seconds.class);
+}}}</p>
+
+<p>This binding creates in a cached scope for 20 seconds a list of AgentPlugin instances on the classpath, loaded by the JDK ServiceLoader (META-INF/services/...). When loaded, each service will be injected with its dependencies.</p>
+
+<p><em>or</em></p>
+
+<p>{{{
+install(ServiceLoaderModule.withClassLoader(ClassLoader.class).of(AgentPlugin.class));
+}}}</p>
+
+<p>In this case. the module creates a binding of key <code>Set&lt;AgentPlugin&gt;</code> containing all loaded and injected instances from the META-INF/services definitions.</p>
+
+<p><code>withClassLoader</code> is optional and takes as parameter the KEY of the binding where to get the classloader. In my case, i have a binding of type ClassLoader which points to the ClassLaoder instance i want to use to discover the services.</p>
+
+<p>== Testing integration ==</p>
+
+<p><a href="https://travis-ci.org/mycila/guice"><img src="https://travis-ci.org/mycila/guice.png?branch=master" alt="Build Status"></a></p>
+        </section>
+
+        <footer>
+          Guice is maintained by <a href="https://github.com/mycila">mycila</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
