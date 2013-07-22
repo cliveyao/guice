@@ -31,15 +31,15 @@
         <hr>
 
         <section id="main_content">
-          <p><strong>Table of Contents</strong></p>
+          <p><strong>Table of Contents</strong>  <em>generated with <a href="http://doctoc.herokuapp.com/">DocToc</a></em></p>
 
 <ul>
 <li>
 <a href="#mycila-guice-extensions">Mycila Guice Extensions</a>
 
 <ul>
-<li><a href="#maven-repository">Maven Repository</a></li>
 <li><a href="#build-status">Build Status</a></li>
+<li><a href="#maven-repository">Maven Repository</a></li>
 <li>
 <a href="#extensions">Extensions</a>
 
@@ -50,6 +50,7 @@
 <li><a href="#4-legacy-and-factory-binder">4. Legacy and Factory Binder</a></li>
 <li><a href="#5-service-and-module-discovery">5. Service and Module discovery</a></li>
 <li><a href="#6-web-extensions">6. Web Extensions</a></li>
+<li><a href="#7-groovy-extensions">7. Groovy Extensions</a></li>
 </ul>
 </li>
 </ul>
@@ -353,6 +354,50 @@ com.mycila.guice.ext.service.MyOverrideModule
 <pre><code>&lt;listener&gt;
     &lt;listener-class&gt;com.mycila.guice.ext.web.MycilaGuiceListener&lt;/listener-class&gt;
 &lt;/listener&gt;
+</code></pre>
+
+<h3>
+<a name="7-groovy-extensions" class="anchor" href="#7-groovy-extensions"><span class="octicon octicon-link"></span></a>7. Groovy Extensions</h3>
+
+<p>This extension scans for classes having methods annotated by <code>@Expand</code> and add those methods to target Groovy classes.</p>
+
+<p><strong>Maven dependency</strong></p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.mycila.guice.extensions&lt;/groupId&gt;
+    &lt;artifactId&gt;mycila-guice-groovy&lt;/artifactId&gt;
+    &lt;version&gt;X.Y.ga&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p><strong>Note</strong></p>
+
+<p>This extension is automatically discovered when using the <a href="#5-service-and-module-discovery">Service and Module discovery extension</a>.</p>
+
+<p><strong>Usage</strong></p>
+
+<p>Just add the module <code>ExpandModule</code> in your Injector. Supposing you have a repository class and a Book class:</p>
+
+<pre><code>class Book {
+    // [...]
+}
+
+class BookRepository {
+
+    @Expand(Book)
+    Book findById(String id) { [...] }
+
+    @Expand(Book)
+    Book save(Book b) { [...] }
+
+} 
+</code></pre>
+
+<p>Than you can now in your code execute:</p>
+
+<pre><code>Book b = Book.findById('123')
+// [...]
+b.save()
 </code></pre>
         </section>
 
