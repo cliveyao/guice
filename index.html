@@ -38,7 +38,6 @@
 <a href="#mycila-guice-extensions">Mycila Guice Extensions</a>
 
 <ul>
-<li><a href="#build-status">Build Status</a></li>
 <li><a href="#maven-repository">Maven Repository</a></li>
 <li>
 <a href="#extensions">Extensions</a>
@@ -54,6 +53,7 @@
 <li><a href="#8-servlet-extension">8. Servlet Extension</a></li>
 </ul>
 </li>
+<li><a href="#get-everything-in-one-package">Get everything in one package</a></li>
 </ul>
 </li>
 </ul><h1>
@@ -71,7 +71,9 @@
 <li>
 <strong>Build status:</strong> <a href="https://travis-ci.org/mycila/guice"><img src="https://travis-ci.org/mycila/guice.png?branch=master" alt="Build Status"></a>
 </li>
-</ul><h2>
+</ul><p><strong>LATEST RELEASE:</strong> <code>3.2.ga</code></p>
+
+<h2>
 <a name="maven-repository" class="anchor" href="#maven-repository"><span class="octicon octicon-link"></span></a>Maven Repository</h2>
 
 <ul>
@@ -407,16 +409,32 @@ b.save()
 <h3>
 <a name="8-servlet-extension" class="anchor" href="#8-servlet-extension"><span class="octicon octicon-link"></span></a>8. Servlet Extension</h3>
 
-<p>Same code as the official Google Guice Servlet Extension, but do not depend on internal Guice stuff but on external Guava dependency instead.  </p>
+<p>This is not an extension but a repackaging</p>
+
+<p>Same code as the official Google Guice Servlet Extension, but do not depend on internal Guice stuff but on external Guava dependency instead.</p>
 
 <p><strong>Maven dependency</strong></p>
 
 <pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.mycila.guice.extensions&lt;/groupId&gt;
-    &lt;artifactId&gt;mycila-guice-servlet&lt;/artifactId&gt;
+    &lt;groupId&gt;com.mycila.guice&lt;/groupId&gt;
+    &lt;artifactId&gt;guice-servlet&lt;/artifactId&gt;
     &lt;version&gt;X.Y.ga&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+
+<h2>
+<a name="get-everything-in-one-package" class="anchor" href="#get-everything-in-one-package"><span class="octicon octicon-link"></span></a>Get everything in one package</h2>
+
+<p>If you want to get all extensions at once (but you may end up with more dependencies that you may want, so you might need to exclude some), then you can depend on:</p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.mycila.guice&lt;/groupId&gt;
+    &lt;artifactId&gt;mycila-guice-all&lt;/artifactId&gt;
+    &lt;version&gt;X.Y.ga&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p><strong>WARNING</strong>: Mycile Guice Servlet, the repackaging of Guice Servlet, which is now using the external Guava dependency, is included in the <code>-all</code> package.</p>
 
 <p><a href="http://githalytics.com/mycila/guice"><img src="https://cruel-carlota.pagodabox.com/1875760f595bd5c7cb70197871c0d854" alt="githalytics.com alpha" title="githalytics.com"></a></p>
         </section>
