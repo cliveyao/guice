@@ -1,37 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
     <title>Mycila Guice by mycila</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <section class="page-header">
+      <h1 class="project-name">Mycila Guice</h1>
+      <h2 class="project-tagline">Mycila Guice Extensions</h2>
+      <a href="https://github.com/mycila/guice" class="btn">View on GitHub</a>
+      <a href="https://github.com/mycila/guice/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/mycila/guice/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <header>
-          <h1>Mycila Guice</h1>
-          <h2>Mycila Guice Extensions</h2>
-        </header>
+    <section class="main-content">
+      <p>The following documentation is not up to date. </p>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/mycila/guice/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/mycila/guice/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/mycila/guice" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+<p>Please help if you want to contribute!</p>
 
-        <hr>
+<p><strong>Lastest releases</strong> (note that it may take up to 1-2 days to be in Maven Central repository):</p>
 
-        <section id="main_content">
-          <p><strong>Table of Contents</strong></p>
+<ul>
+<li>
+<a href="http://repo1.maven.org/maven2/com/mycila/guice">3.6.ga</a> (2015-01-23) - see <a href="https://github.com/mycila/guice/issues?q=milestone%3A3.6">issues and pull requests</a>
+</li>
+</ul>
+
+<hr>
+
+<p><strong>Table of Contents</strong></p>
 
 <ul>
 <li>
@@ -59,7 +61,7 @@
 </ul>
 
 <h1>
-<a name="mycila-guice-extensions" class="anchor" href="#mycila-guice-extensions"><span class="octicon octicon-link"></span></a>Mycila Guice Extensions</h1>
+<a id="mycila-guice-extensions" class="anchor" href="#mycila-guice-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mycila Guice Extensions</h1>
 
 <p>This project contains a set of Google Guice Extensions useful in every-days development with <a href="https://code.google.com/p/google-guice/">Google Guice</a>.</p>
 
@@ -78,7 +80,7 @@
 <p><strong>LATEST RELEASE:</strong> <code>3.5.ga</code> (please double-check in Maven Central repo: this website is not always updated)</p>
 
 <h2>
-<a name="maven-repository" class="anchor" href="#maven-repository"><span class="octicon octicon-link"></span></a>Maven Repository</h2>
+<a id="maven-repository" class="anchor" href="#maven-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maven Repository</h2>
 
 <ul>
 <li>
@@ -94,10 +96,10 @@
 <p>Available in OSS Repository:  <a href="https://oss.sonatype.org/content/repositories/snapshots/com/mycila/guice/extensions/">https://oss.sonatype.org/content/repositories/snapshots/com/mycila/guice/extensions/</a></p>
 
 <h2>
-<a name="extensions" class="anchor" href="#extensions"><span class="octicon octicon-link"></span></a>Extensions</h2>
+<a id="extensions" class="anchor" href="#extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extensions</h2>
 
 <h3>
-<a name="1-customizes-injection-annotations" class="anchor" href="#1-customizes-injection-annotations"><span class="octicon octicon-link"></span></a>1. Customizes injection annotations</h3>
+<a id="1-customizes-injection-annotations" class="anchor" href="#1-customizes-injection-annotations" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Customizes injection annotations</h3>
 
 <p>This extensions enables you to define custom injection annotations and use them. This extensions is used by the <a href="#3-jsr-250">JSR-250 extension</a>.  </p>
 
@@ -140,7 +142,7 @@ public @interface Autowire {
 </code></pre>
 
 <h3>
-<a name="2-closeable-injector" class="anchor" href="#2-closeable-injector"><span class="octicon octicon-link"></span></a>2. Closeable Injector</h3>
+<a id="2-closeable-injector" class="anchor" href="#2-closeable-injector" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Closeable Injector</h3>
 
 <p>This extension allows your classes to listen when an Injector is closed, to be able to clean some resources for example.</p>
 
@@ -189,7 +191,7 @@ public @interface Autowire {
 </code></pre>
 
 <h3>
-<a name="3-jsr-250" class="anchor" href="#3-jsr-250"><span class="octicon octicon-link"></span></a>3. JSR-250</h3>
+<a id="3-jsr-250" class="anchor" href="#3-jsr-250" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. JSR-250</h3>
 
 <p>This extension adds JSR-250 (object life-cycle) support to Guice.</p>
 
@@ -252,7 +254,7 @@ public class Bank {
 </code></pre>
 
 <h3>
-<a name="4-legacy-and-factory-binder" class="anchor" href="#4-legacy-and-factory-binder"><span class="octicon octicon-link"></span></a>4. Legacy and Factory Binder</h3>
+<a id="4-legacy-and-factory-binder" class="anchor" href="#4-legacy-and-factory-binder" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Legacy and Factory Binder</h3>
 
 <p>This extension allows the binding easily of legacy code or objects build through a factory method. </p>
 
@@ -300,7 +302,7 @@ public class Bank {
 <p>This enables Guice to load and inject the <code>ServiceFactory</code> and get all the parameters also from the Guice bindings.</p>
 
 <h3>
-<a name="5-service-and-module-discovery" class="anchor" href="#5-service-and-module-discovery"><span class="octicon octicon-link"></span></a>5. Service and Module discovery</h3>
+<a id="5-service-and-module-discovery" class="anchor" href="#5-service-and-module-discovery" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Service and Module discovery</h3>
 
 <p>This extension allows the discovery of Guice module automatically in the classpath by using the JDK Service Loader feature. You can also bind custom interfaces and automatically discover and inject into the implementations defined on the classpath.</p>
 
@@ -348,7 +350,7 @@ com.mycila.guice.ext.service.MyOverrideModule
 <p>Just put on your classpath the file <code>META-INF/services/my.package.MyService</code> and the list of implementations in it.</p>
 
 <h3>
-<a name="6-web-extensions" class="anchor" href="#6-web-extensions"><span class="octicon octicon-link"></span></a>6. Web Extensions</h3>
+<a id="6-web-extensions" class="anchor" href="#6-web-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Web Extensions</h3>
 
 <p>This extension facilitate the setup of a Guice environment within a web application.</p>
 
@@ -371,7 +373,7 @@ com.mycila.guice.ext.service.MyOverrideModule
 </code></pre>
 
 <h3>
-<a name="7-groovy-extensions" class="anchor" href="#7-groovy-extensions"><span class="octicon octicon-link"></span></a>7. Groovy Extensions</h3>
+<a id="7-groovy-extensions" class="anchor" href="#7-groovy-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Groovy Extensions</h3>
 
 <p>This extension scans for classes having methods annotated by <code>@Expand</code> and add those methods to target Groovy classes.</p>
 
@@ -415,7 +417,7 @@ b.save()
 </code></pre>
 
 <h3>
-<a name="8-servlet-extension" class="anchor" href="#8-servlet-extension"><span class="octicon octicon-link"></span></a>8. Servlet Extension</h3>
+<a id="8-servlet-extension" class="anchor" href="#8-servlet-extension" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Servlet Extension</h3>
 
 <p>This is not an extension but a repackaging</p>
 
@@ -431,7 +433,7 @@ b.save()
 </code></pre>
 
 <h2>
-<a name="get-everything-in-one-package" class="anchor" href="#get-everything-in-one-package"><span class="octicon octicon-link"></span></a>Get everything in one package</h2>
+<a id="get-everything-in-one-package" class="anchor" href="#get-everything-in-one-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get everything in one package</h2>
 
 <p>If you want to get all extensions at once (but you may end up with more dependencies that you may want, so you might need to exclude some), then you can depend on:</p>
 
@@ -445,14 +447,16 @@ b.save()
 <p>Note: the <code>-all</code> package depends on the repackaging version of Google Guice Servlet</p>
 
 <p><a href="http://githalytics.com/mycila/guice"><img src="https://cruel-carlota.pagodabox.com/cf77f56baad338e179ef83d90c026635" alt="githalytics.com alpha" title="githalytics.com"></a></p>
-        </section>
 
-        <footer>
-          Mycila Guice is maintained by <a href="https://github.com/mycila">mycila</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/mycila/guice">Mycila Guice</a> is maintained by <a href="https://github.com/mycila">mycila</a>.</span>
 
-                  <script type="text/javascript">
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -463,7 +467,6 @@ b.save()
             } catch(err) {}
           </script>
 
-      </div>
-    </div>
   </body>
 </html>
+
