@@ -1,3 +1,5 @@
+guice extend jsr 250 330
+
 The following documentation is not up to date. Please help if you want to contribute!
 
 ---------------
